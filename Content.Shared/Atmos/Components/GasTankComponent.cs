@@ -1,11 +1,11 @@
-using Content.Shared.Atmos;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Shared.Atmos.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     {
         public const float MaxExplosionRange = 26f;
@@ -33,7 +33,7 @@ namespace Content.Server.Atmos.Components
         public EntityUid? ConnectStream;
         public EntityUid? DisconnectStream;
 
-        [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, AutoNetworkedField]
         public GasMixture Air { get; set; } = new();
 
         /// <summary>
@@ -117,5 +117,11 @@ namespace Content.Server.Atmos.Components
             {
                 Params = AudioParams.Default.WithVolume(-5f),
             };
+
+        /// <summary>
+        /// Whether to show this tank's temperature when it's examined.
+        /// </summary>
+        [DataField]
+        public bool ShowTemperatureExamine = true;
     }
 }

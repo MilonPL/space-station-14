@@ -12,7 +12,7 @@ namespace Content.Shared.Atmos
     /// <summary>
     ///     A general-purpose, variable volume gas mixture.
     /// </summary>
-    [Serializable]
+    [Serializable, NetSerializable]
     [DataDefinition]
     public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks, IEnumerable<(Gas gas, float moles)>
     {
